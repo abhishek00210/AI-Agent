@@ -1,0 +1,9 @@
+"use client";
+import type { CustomerProfile } from "@ai-agent-platform/types";
+import { useQuery } from "@tanstack/react-query";
+import { adminApi } from "@/lib/admin-api";
+type AdminCustomer = CustomerProfile & { organization: { name: string }; contact: { leads: unknown[]; appointments: unknown[]; communicationThreads: unknown[] } };
+export default function AdminCustomersPage() {
+  const customers = useQuery({ queryKey: ["admin","customers"], queryFn: () => adminApi.list("customers") as Promise<AdminCustomer[]> });
+  return <div className="space-y-6"><div><p className="text-sm font-medium text-teal-300">Super Admin</p><h1 className="mt-2 text-3xl font-semibold">Customer Profiles</h1><p className="mt-2 text-sm text-zinc-500">Unified customer identity and activity across organizations.</p></div><div className="overflow-x-auto rounded-2xl border border-white/10"><table className="w-full min-w-[900px] text-sm"><thead className="text-left text-xs uppercase text-zinc-500"><tr><th className="px-4 py-3">Customer</th><th className="px-4 py-3">Organization</th><th className="px-4 py-3">Phone</th><th className="px-4 py-3">Status</th><th className="px-4 py-3">Calls</th><th className="px-4 py-3">Appointments</th><th className="px-4 py-3">Last contact</th></tr></thead><tbody className="divide-y divide-white/10">{(customers.data ?? []).map((item) => <tr key={item.id}><td className="px-4 py-3">{item.name}<div className="text-xs text-zinc-500">{item.email}</div></td><td className="px-4 py-3">{item.organization.name}</td><td className="px-4 py-3 font-mono">{item.phone ?? "—"}</td><td className="px-4 py-3">{item.leadStatus}</td><td className="px-4 py-3">{item.totalCalls}</td><td className="px-4 py-3">{item.totalAppointments}</td><td className="px-4 py-3">{item.lastContactAt ? new Date(item.lastContactAt).toLocaleDateString() : "—"}</td></tr>)}</tbody></table></div></div>;
+}

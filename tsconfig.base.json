@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowJs": false,
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@ai-agent-platform/ui": ["packages/ui/src/index.ts"],
+      "@ai-agent-platform/ui/*": ["packages/ui/src/*"],
+      "@ai-agent-platform/shared": ["packages/shared/src/index.ts"],
+      "@ai-agent-platform/shared/*": ["packages/shared/src/*"],
+      "@ai-agent-platform/types": ["packages/types/src/index.ts"],
+      "@ai-agent-platform/types/*": ["packages/types/src/*"],
+      "@ai-agent-platform/sdk": ["packages/sdk/src/index.ts"],
+      "@ai-agent-platform/sdk/*": ["packages/sdk/src/*"]
+    }
+  }
+}

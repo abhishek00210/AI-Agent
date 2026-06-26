@@ -1,0 +1,2 @@
+ALTER TYPE "CommunicationProvider" ADD VALUE IF NOT EXISTS 'EXOTEL';
+ALTER TYPE "PhoneNumberProvider" ADD VALUE IF NOT EXISTS 'EXOTEL';

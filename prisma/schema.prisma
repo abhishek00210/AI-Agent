@@ -1,0 +1,2770 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../apps/api/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum OrganizationPlan {
+  FREE
+  STARTER
+  PRO
+  AGENCY
+}
+
+enum Country {
+  CA
+  IN
+}
+
+enum Currency {
+  CAD
+  INR
+}
+
+enum Language {
+  en
+  fr
+  hi
+}
+
+enum BillingProvider {
+  STRIPE
+  RAZORPAY
+}
+
+enum BillingAddonType {
+  PHONE_NUMBER
+}
+
+enum BillingAddonStatus {
+  PENDING
+  ACTIVE
+  FAILED
+  INACTIVE
+}
+
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  UNPAID
+  INCOMPLETE
+  EXPIRED
+}
+
+enum TrialStatus {
+  ACTIVE
+  CONVERTED
+  EXPIRED
+}
+
+enum PlanType {
+  FREE
+  STARTER
+  PRO
+  AGENCY
+}
+
+enum UsageResource {
+  AI_MINUTES
+  REALTIME_VOICE_MINUTES
+  INCOMING_CALLS
+  OUTGOING_CALLS
+  MESSAGES
+  SMS_MESSAGES
+  AI_INPUT_TOKENS
+  AI_OUTPUT_TOKENS
+  KNOWLEDGE_STORAGE_MB
+  KNOWLEDGE_BASES
+  AGENTS
+  APPOINTMENTS
+  PHONE_NUMBERS
+  WIDGETS
+  CALENDAR_CONNECTIONS
+  TOOL_EXECUTIONS
+  EXTERNAL_PHONE_NUMBERS
+  PHONE_VERIFICATION_ATTEMPTS
+  PHONE_FORWARDING_TESTS
+  PHONE_FORWARDING_ACTIVATIONS
+  PORT_REQUESTS
+  COMPLETED_PORTS
+  FAILED_PORTS
+  CUSTOMER_PROFILES_CREATED
+  CUSTOMER_PROFILES_UPDATED
+  TIMELINE_WRITES
+  TIMELINE_READS
+  AI_SUMMARY_GENERATIONS
+  AI_SUMMARY_INPUT_TOKENS
+  AI_SUMMARY_OUTPUT_TOKENS
+  AI_SUMMARY_COST_MICROS
+  MEMORY_RETRIEVALS
+  MEMORY_CONTEXT_TOKENS
+  GREETING_GENERATIONS
+  GREETING_CONTEXT_LOADS
+  AUTOMATION_EXECUTIONS
+  AUTOMATION_SMS_SENT
+  AUTOMATION_EMAILS_SENT
+  AUTOMATION_CALLS_SCHEDULED
+  WORKFLOW_TEMPLATE_ACTIVATIONS
+  OUTBOUND_CALLS
+  OUTBOUND_MINUTES
+  OUTBOUND_RECORDINGS
+  OUTBOUND_TRANSCRIPTS
+  QUALIFICATION_ATTEMPTS
+  CAMPAIGN_TARGETS
+  CAMPAIGN_CALLS
+  CAMPAIGN_MINUTES
+  LEAD_IMPORTS
+  IMPORTED_LEADS
+  CSV_UPLOADS
+}
+
+enum LeadImportStatus {
+  PENDING
+  MAPPING
+  PREVIEWED
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum LeadImportDuplicateStrategy {
+  SKIP
+  UPDATE_EXISTING
+  CREATE_NEW
+}
+
+enum AutomationTriggerType {
+  NEW_LEAD
+  MISSED_APPOINTMENT
+  APPOINTMENT_COMPLETED
+  NO_RESPONSE
+  UPCOMING_APPOINTMENT
+  QUOTE_SENT
+}
+
+enum AutomationActionType {
+  CALL
+  SMS
+  EMAIL
+}
+
+enum OutboundCallReason {
+  LEAD_FOLLOW_UP
+  MISSED_APPOINTMENT
+  QUOTE_FOLLOW_UP
+  REVIEW_REQUEST
+  MANUAL_CALL
+  REACTIVATION
+  APPOINTMENT_REMINDER
+}
+
+enum OutboundCallReasonType {
+  LEAD_FOLLOW_UP
+  QUOTE_FOLLOW_UP
+  MISSED_APPOINTMENT
+  REVIEW_REQUEST
+  MANUAL_CALL
+  AUTOMATION_CALL
+  FOLLOW_UP
+  SYSTEM_TRIGGER
+  REACTIVATION
+}
+
+enum OutboundCallStatus {
+  PENDING
+  SCHEDULED
+  DIALING
+  RINGING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+  BUSY
+  NO_ANSWER
+  VOICEMAIL
+  CANCELLED
+}
+
+enum CampaignType {
+  FOLLOW_UP
+  RE_ENGAGEMENT
+  REMINDER
+  SALES_OUTREACH
+}
+
+enum CampaignStatus {
+  DRAFT
+  SCHEDULED
+  RUNNING
+  PAUSED
+  COMPLETED
+  CANCELLED
+}
+
+enum CampaignScheduleType {
+  IMMEDIATE
+  SCHEDULED
+  RECURRING
+}
+
+enum CampaignTargetStatus {
+  PENDING
+  QUEUED
+  CALL_CREATED
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum AutomationExecutionStatus {
+  PENDING
+  SCHEDULED
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum WorkflowTemplateCategory {
+  LEAD
+  APPOINTMENT
+  REVIEW
+  QUOTE
+  CUSTOM
+}
+
+enum Sentiment {
+  POSITIVE
+  NEUTRAL
+  NEGATIVE
+}
+
+enum Outcome {
+  BOOKED_APPOINTMENT
+  QUALIFIED_LEAD
+  FOLLOW_UP_REQUIRED
+  INFORMATION_PROVIDED
+  TRANSFERRED
+  UNRESOLVED
+  OTHER
+}
+
+enum CustomerLeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  BOOKED
+  CUSTOMER
+  LOST
+}
+
+enum CustomerTimelineEventType {
+  CUSTOMER_CREATED
+  CALL_RECEIVED
+  CALL_COMPLETED
+  CONVERSATION_STARTED
+  CONVERSATION_COMPLETED
+  LEAD_CREATED
+  LEAD_UPDATED
+  LEAD_DELETED
+  LEAD_RESTORED
+  LEAD_IMPORTED
+  IMPORT_COMPLETED
+  LEAD_STATUS_CHANGED
+  APPOINTMENT_BOOKED
+  APPOINTMENT_RESCHEDULED
+  APPOINTMENT_CANCELLED
+  SMS_SENT
+  SMS_RECEIVED
+  EMAIL_SENT
+  EMAIL_RECEIVED
+  FOLLOW_UP_SENT
+  FOLLOW_UP_SCHEDULED
+  FOLLOW_UP_CANCELLED
+  FOLLOW_UP_FAILED
+  WORKFLOW_CREATED
+  WORKFLOW_ENABLED
+  WORKFLOW_TRIGGERED
+  WORKFLOW_COMPLETED
+  WORKFLOW_CANCELLED
+  OUTBOUND_CALL_CREATED
+  OUTBOUND_CALL_STARTED
+  OUTBOUND_CALL_FAILED
+  LEAD_QUALIFIED
+  NOTE_ADDED
+  AI_SUMMARY_GENERATED
+  OUTBOUND_CALL_COMPLETED
+  CAMPAIGN_CREATED
+  CAMPAIGN_STARTED
+  CAMPAIGN_COMPLETED
+  CAMPAIGN_CANCELLED
+  CAMPAIGN_CALL_CREATED
+}
+
+enum CustomerTimelineCategory {
+  CUSTOMER
+  VOICE
+  SMS
+  EMAIL
+  LEAD
+  APPOINTMENT
+  AI
+  SYSTEM
+}
+
+enum PortRequestStatus {
+  PENDING
+  DOCUMENT_REQUIRED
+  SUBMITTED
+  PROCESSING
+  REJECTED
+  APPROVED
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum PortDocumentType {
+  PORT_LOA
+}
+
+enum ExternalPhoneNumberStatus {
+  PENDING
+  VERIFIED
+  ACTIVE
+  FAILED
+  DISABLED
+}
+
+enum ExternalNumberVerificationMethod {
+  SMS
+  VOICE
+}
+
+enum OrganizationStatus {
+  ACTIVE
+  TRIAL_EXPIRED
+  SUSPENDED
+  ARCHIVED
+}
+
+enum UserStatus {
+  ACTIVE
+  INVITED
+  SUSPENDED
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+}
+
+enum AdminUserStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum SupportTicketStatus {
+  OPEN
+  PENDING
+  RESOLVED
+  CLOSED
+}
+
+enum SupportTicketPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum MemberRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+enum AgentStatus {
+  ACTIVE
+  INACTIVE
+  DRAFT
+}
+
+enum KnowledgeBaseStatus {
+  ACTIVE
+  INACTIVE
+  DRAFT
+}
+
+enum UploadStatus {
+  PENDING
+  UPLOADED
+  FAILED
+}
+
+enum ProcessingStatus {
+  PENDING
+  PROCESSING
+  EMBEDDING
+  COMPLETED
+  FAILED
+}
+
+enum WebsiteSourceStatus {
+  PENDING
+  SCRAPING
+  COMPLETED
+  FAILED
+}
+
+enum FaqStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum ConversationChannel {
+  WEB_CHAT
+  VOICE
+  SMS
+  WHATSAPP
+}
+
+enum ConversationStatus {
+  ACTIVE
+  CLOSED
+  ARCHIVED
+}
+
+enum ConversationSource {
+  INTERNAL
+  WIDGET
+}
+
+enum SenderType {
+  USER
+  ASSISTANT
+  SYSTEM
+}
+
+enum MessageType {
+  TEXT
+  SYSTEM_EVENT
+  TOOL_CALL
+  TOOL_RESULT
+}
+
+enum ToolExecutionStatus {
+  PENDING
+  RUNNING
+  SUCCESS
+  FAILED
+  REJECTED
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  BOOKED
+  CUSTOMER
+  LOST
+  CLOSED
+}
+
+enum LeadSource {
+  VOICE
+  CHAT
+  WIDGET
+  MANUAL
+  IMPORT
+  AI_AGENT
+}
+
+enum TimelineEventType {
+  CALL
+  CHAT
+  APPOINTMENT
+  SMS
+  EMAIL
+  NOTE
+}
+
+enum CommunicationChannel {
+  SMS
+  EMAIL
+  WHATSAPP
+  WEB_CHAT
+  VOICE
+}
+
+enum CommunicationDirection {
+  INBOUND
+  OUTBOUND
+}
+
+enum CommunicationProvider {
+  TWILIO
+  EXOTEL
+}
+
+enum CommunicationStatus {
+  QUEUED
+  SENDING
+  SENT
+  DELIVERED
+  READ
+  FAILED
+}
+
+enum QueueStatus {
+  PENDING
+  PROCESSING
+  SENT
+  FAILED
+}
+
+enum MemoryFactType {
+  USER_INFO
+  BUSINESS_INFO
+  APPOINTMENT
+  CONTACT
+  PREFERENCE
+  CUSTOM
+}
+
+enum WidgetStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum WidgetPosition {
+  BOTTOM_RIGHT
+  BOTTOM_LEFT
+}
+
+enum PhoneNumberStatus {
+  ACTIVE
+  INACTIVE
+  UNASSIGNED
+}
+
+enum PhoneNumberProvider {
+  TWILIO
+  EXOTEL
+}
+
+enum PurchaseSource {
+  TWILIO
+  PORTED
+  EXTERNAL
+}
+
+enum TwilioConnectionStatus {
+  CONNECTED
+  DISCONNECTED
+}
+
+enum CallDirection {
+  INBOUND
+  OUTBOUND
+}
+
+enum CallStatus {
+  RINGING
+  ROUTING
+  CONNECTED
+  COMPLETED
+  FAILED
+  MISSED
+}
+
+enum CallSource {
+  VOICE
+  WIDGET
+  INTERNAL
+}
+
+enum CallEndReason {
+  CALLER_HANGUP
+  AI_HANGUP
+  TIMEOUT
+  ERROR
+  TRANSFER
+  UNKNOWN
+}
+
+enum CallSessionStatus {
+  CONNECTING
+  CONNECTED
+  DISCONNECTED
+  FAILED
+}
+
+enum RealtimeSessionStatus {
+  CONNECTING
+  CONNECTED
+  DISCONNECTED
+  FAILED
+}
+
+enum RecordingStatus {
+  PENDING
+  RECORDING
+  PROCESSING
+  AVAILABLE
+  FAILED
+  DELETED
+}
+
+enum TranscriptStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum SpeakerType {
+  USER
+  ASSISTANT
+  SYSTEM
+  UNKNOWN
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum AppointmentSource {
+  VOICE
+  CHAT
+  WIDGET
+  MANUAL
+}
+
+model Organization {
+  id                           String              @id @default(uuid())
+  name                         String
+  slug                         String              @unique
+  plan                         OrganizationPlan    @default(FREE)
+  status                       OrganizationStatus  @default(ACTIVE)
+  industry                     String?
+  companySize                  String?
+  provisionStatus              String              @default("PROVISIONED")
+  trialStartsAt                DateTime?
+  trialEndsAt                  DateTime?
+  trialStatus                  TrialStatus?
+  personalizedGreetingsEnabled Boolean             @default(true)
+  greetingRecencyWindowDays    Int                 @default(90)
+  greetingConfidenceThreshold  String              @default("MEDIUM")
+  country                      Country             @default(CA)
+  countryCode                  String              @default("CA")
+  currency                     Currency            @default(CAD)
+  timezone                     String              @default("America/Toronto")
+  language                     Language            @default(en)
+  telephonyProvider            PhoneNumberProvider @default(TWILIO)
+  paymentProvider              BillingProvider     @default(STRIPE)
+  dateFormat                   String              @default("yyyy-MM-dd")
+  timeFormat                   String              @default("HH:mm")
+  numberFormat                 String              @default("+1")
+  businessHoursTimezone        String              @default("America/Toronto")
+  gstNumber                    String?
+  billingCompanyName           String?
+  billingAddress               Json?
+  taxRegion                    String?
+  createdAt                    DateTime            @default(now())
+  updatedAt                    DateTime            @updatedAt
+  deletedAt                    DateTime?
+
+  members                    OrganizationMember[]
+  agents                     Agent[]
+  knowledgeBases             KnowledgeBase[]
+  documents                  Document[]
+  websiteSources             WebsiteSource[]
+  websiteContents            WebsiteContent[]
+  knowledgeChunks            KnowledgeChunk[]
+  knowledgeEmbeddings        KnowledgeEmbedding[]
+  faqEntries                 FaqEntry[]
+  ragSearchEvents            RagSearchEvent[]
+  conversations              Conversation[]
+  messages                   Message[]
+  conversationMemories       ConversationMemory[]
+  memoryFacts                MemoryFact[]
+  widgets                    Widget[]
+  widgetVisitors             WidgetVisitor[]
+  phoneNumbers               PhoneNumber[]
+  externalPhoneNumbers       ExternalPhoneNumber[]
+  portRequests               PortRequest[]
+  portDocuments              PortDocument[]
+  customerProfiles           CustomerProfile[]
+  customerTimelineEvents     CustomerTimelineEvent[]
+  callSummaries              CallSummary[]
+  outboundCalls              OutboundCall[]
+  campaigns                  Campaign[]
+  twilioConnections          TwilioConnection[]
+  calls                      Call[]
+  callSessions               CallSession[]
+  realtimeSessions           RealtimeSession[]
+  callRecordings             CallRecording[]
+  callTranscripts            CallTranscript[]
+  tools                      Tool[]
+  toolExecutions             ToolExecution[]
+  appointmentRequests        AppointmentRequest[]
+  appointments               Appointment[]
+  availabilityRules          Availability[]
+  contacts                   Contact[]
+  leads                      Lead[]
+  leadImports                LeadImport[]
+  communicationThreads       CommunicationThread[]
+  communicationMessages      CommunicationMessage[]
+  emailQueue                 EmailQueue[]
+  smsQueue                   SmsQueue[]
+  invitations                OrganizationInvitation[]
+  auditEvents                AuditEvent[]
+  leadTimelineEvents         LeadTimelineEvent[]
+  billingCustomers           BillingCustomer[]
+  subscriptions              Subscription[]
+  billingEvents              BillingEvent[]
+  billingAddons              BillingAddon[]
+  featureOverrides           OrganizationFeatureOverride[]
+  usageEvents                UsageEvent[]
+  usageCounters              UsageCounter[]
+  analyticsEvents            AnalyticsEvent[]
+  analyticsDailyMetrics      AnalyticsDailyMetric[]
+  analyticsAgentDailyMetrics AnalyticsAgentDailyMetric[]
+  analyticsMetricSnapshots   AnalyticsMetricSnapshot[]
+  supportTickets             SupportTicket[]
+  automationWorkflows        AutomationWorkflow[]
+  automationExecutions       AutomationExecution[]
+  automationTemplates        AutomationTemplate[]
+  workflowTemplates          WorkflowTemplate[]
+
+  @@index([slug])
+  @@index([status])
+  @@index([country])
+  @@index([countryCode])
+  @@index([telephonyProvider])
+  @@index([paymentProvider])
+  @@index([trialStatus, trialEndsAt])
+  @@index([deletedAt])
+}
+
+model UsageEvent {
+  id             String        @id @default(uuid())
+  organizationId String
+  resourceType   UsageResource
+  quantity       Decimal       @db.Decimal(20, 6)
+  idempotencyKey String?
+  metadata       Json          @default("{}")
+  createdAt      DateTime      @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, idempotencyKey])
+  @@index([organizationId])
+  @@index([resourceType])
+  @@index([organizationId, resourceType, createdAt])
+  @@map("usage_events")
+}
+
+model UsageCounter {
+  id                 String        @id @default(uuid())
+  organizationId     String
+  resourceType       UsageResource
+  currentValue       Decimal       @default(0) @db.Decimal(20, 6)
+  billingPeriodStart DateTime
+  billingPeriodEnd   DateTime
+  version            Int           @default(1)
+  updatedAt          DateTime      @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, resourceType, billingPeriodStart])
+  @@index([organizationId])
+  @@index([resourceType])
+  @@index([billingPeriodStart])
+  @@index([organizationId, billingPeriodStart, billingPeriodEnd])
+  @@map("usage_counters")
+}
+
+model AnalyticsEvent {
+  id             String       @id @default(uuid())
+  organizationId String
+  eventType      String
+  idempotencyKey String
+  agentId        String?
+  metricDate     DateTime
+  metadata       Json         @default("{}")
+  processedAt    DateTime?
+  createdAt      DateTime     @default(now())
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, idempotencyKey])
+  @@index([organizationId, metricDate])
+  @@index([organizationId, eventType, metricDate])
+  @@index([processedAt])
+  @@map("analytics_events")
+}
+
+model AnalyticsDailyMetric {
+  id                     String       @id @default(uuid())
+  organizationId         String
+  date                   DateTime
+  totalCalls             Int          @default(0)
+  incomingCalls          Int          @default(0)
+  outgoingCalls          Int          @default(0)
+  outboundAnsweredCalls  Int          @default(0)
+  outboundConversions    Int          @default(0)
+  appointments           Int          @default(0)
+  appointmentsBookedByAi Int          @default(0)
+  leads                  Int          @default(0)
+  leadsCreatedByAi       Int          @default(0)
+  qualifiedLeads         Int          @default(0)
+  customers              Int          @default(0)
+  newCustomers           Int          @default(0)
+  returningCustomers     Int          @default(0)
+  recognizedCallers      Int          @default(0)
+  memoryContextLoads     Int          @default(0)
+  personalizedGreetings  Int          @default(0)
+  greetingLevel0         Int          @default(0)
+  greetingLevel1         Int          @default(0)
+  greetingLevel2         Int          @default(0)
+  greetingLevel3         Int          @default(0)
+  repeatCallers          Int          @default(0)
+  conversionRate         Decimal      @default(0) @db.Decimal(8, 4)
+  customerRetentionRate  Decimal      @default(0) @db.Decimal(8, 4)
+  outboundAnswerRate     Decimal      @default(0) @db.Decimal(8, 4)
+  outboundConversionRate Decimal      @default(0) @db.Decimal(8, 4)
+  followupSuccessRate    Decimal      @default(0) @db.Decimal(8, 4)
+  aiMinutes              Decimal      @default(0) @db.Decimal(20, 6)
+  aiResponses            Int          @default(0)
+  aiInputTokens          BigInt       @default(0)
+  aiOutputTokens         BigInt       @default(0)
+  toolExecutions         Int          @default(0)
+  smsSent                Int          @default(0)
+  messagesSent           Int          @default(0)
+  revenue                Decimal      @default(0) @db.Decimal(20, 2)
+  callDurationSeconds    Int          @default(0)
+  avgCallDuration        Decimal      @default(0) @db.Decimal(20, 4)
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime     @updatedAt
+  organization           Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, date])
+  @@index([organizationId])
+  @@index([date])
+  @@index([organizationId, date])
+  @@map("analytics_daily_metrics")
+}
+
+model AnalyticsAgentDailyMetric {
+  id             String       @id @default(uuid())
+  organizationId String
+  agentId        String
+  agentName      String
+  date           DateTime
+  calls          Int          @default(0)
+  appointments   Int          @default(0)
+  leads          Int          @default(0)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, agentId, date])
+  @@index([organizationId, date])
+  @@index([organizationId, agentId, date])
+  @@map("analytics_agent_daily_metrics")
+}
+
+model AnalyticsMetricSnapshot {
+  id             String       @id @default(uuid())
+  organizationId String
+  metricKey      String
+  metricValue    Decimal      @db.Decimal(20, 6)
+  snapshotDate   DateTime
+  metadata       Json         @default("{}")
+  createdAt      DateTime     @default(now())
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, metricKey, snapshotDate])
+  @@index([organizationId])
+  @@index([metricKey])
+  @@index([snapshotDate])
+  @@map("analytics_metric_snapshots")
+}
+
+model User {
+  id           String     @id @default(uuid())
+  email        String     @unique
+  passwordHash String
+  firstName    String
+  lastName     String
+  status       UserStatus @default(INVITED)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  deletedAt    DateTime?
+
+  memberships         OrganizationMember[]
+  portDocuments       PortDocument[]           @relation("PortDocumentUploader")
+  refreshTokens       RefreshToken[]
+  passwordResetTokens PasswordResetToken[]
+  sentInvitations     OrganizationInvitation[] @relation("OrganizationInvitationInviter")
+  auditEvents         AuditEvent[]             @relation("AuditEventActor")
+  uploadedDocuments   Document[]               @relation("DocumentUploader")
+  supportTickets      SupportTicket[]
+
+  @@index([email])
+  @@index([status])
+  @@index([deletedAt])
+}
+
+model AdminUser {
+  id           String          @id @default(uuid())
+  email        String          @unique
+  passwordHash String
+  firstName    String
+  lastName     String
+  role         AdminRole       @default(SUPER_ADMIN)
+  status       AdminUserStatus @default(ACTIVE)
+  lastLoginAt  DateTime?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  auditLogs       AdminAuditLog[]
+  assignedTickets SupportTicket[]
+
+  @@index([email])
+  @@index([status])
+  @@map("admin_users")
+}
+
+model AdminAuditLog {
+  id           String   @id @default(uuid())
+  adminUserId  String?
+  action       String
+  resourceType String
+  resourceId   String?
+  metadata     Json     @default("{}")
+  ipAddress    String?
+  createdAt    DateTime @default(now())
+
+  adminUser AdminUser? @relation(fields: [adminUserId], references: [id], onDelete: SetNull)
+
+  @@index([adminUserId])
+  @@index([action])
+  @@index([resourceType])
+  @@index([resourceId])
+  @@index([createdAt])
+  @@map("admin_audit_logs")
+}
+
+model RefreshToken {
+  id         String    @id @default(uuid())
+  userId     String
+  tokenHash  String
+  expiresAt  DateTime
+  deviceInfo String?
+  createdAt  DateTime  @default(now())
+  revokedAt  DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@index([revokedAt])
+}
+
+model PasswordResetToken {
+  id        String    @id @default(uuid())
+  userId    String
+  tokenHash String
+  expiresAt DateTime
+  createdAt DateTime  @default(now())
+  usedAt    DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@index([usedAt])
+}
+
+model OrganizationMember {
+  id             String     @id @default(uuid())
+  organizationId String
+  userId         String
+  role           MemberRole @default(MEMBER)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  deletedAt      DateTime?
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, userId])
+  @@index([organizationId])
+  @@index([userId])
+  @@index([role])
+  @@index([deletedAt])
+}
+
+model OrganizationInvitation {
+  id             String     @id @default(uuid())
+  organizationId String
+  email          String
+  role           MemberRole @default(MEMBER)
+  invitedById    String
+  acceptedAt     DateTime?
+  expiresAt      DateTime
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  invitedBy    User         @relation("OrganizationInvitationInviter", fields: [invitedById], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, email])
+  @@index([organizationId])
+  @@index([email])
+  @@index([acceptedAt])
+}
+
+model AuditEvent {
+  id             String   @id @default(uuid())
+  organizationId String
+  actorUserId    String?
+  action         String
+  entityType     String
+  entityId       String?
+  metadata       Json?
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  actor        User?        @relation("AuditEventActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([actorUserId])
+  @@index([action])
+  @@index([createdAt])
+}
+
+model BillingCustomer {
+  id                 String          @id @default(uuid())
+  organizationId     String
+  provider           BillingProvider @default(STRIPE)
+  providerCustomerId String
+  email              String
+  status             String          @default("ACTIVE")
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+
+  organization  Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  subscriptions Subscription[]
+
+  @@unique([organizationId, provider])
+  @@unique([provider, providerCustomerId])
+  @@index([organizationId])
+  @@index([providerCustomerId])
+  @@index([status])
+  @@map("billing_customers")
+}
+
+model Subscription {
+  id                     String             @id @default(uuid())
+  organizationId         String
+  billingCustomerId      String
+  provider               BillingProvider    @default(STRIPE)
+  providerSubscriptionId String
+  providerPriceId        String
+  plan                   PlanType
+  status                 SubscriptionStatus
+  currentPeriodStart     DateTime
+  currentPeriodEnd       DateTime
+  cancelAtPeriodEnd      Boolean            @default(false)
+  cancelledAt            DateTime?
+  pausedAt               DateTime?
+  pauseResumesAt         DateTime?
+  pendingPlan            PlanType?
+  trialEndsAt            DateTime?
+  metadata               Json               @default("{}")
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
+
+  organization    Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  billingCustomer BillingCustomer @relation(fields: [billingCustomerId], references: [id], onDelete: Cascade)
+  billingAddons   BillingAddon[]
+
+  @@unique([provider, providerSubscriptionId])
+  @@index([organizationId])
+  @@index([billingCustomerId])
+  @@index([providerSubscriptionId])
+  @@index([status])
+  @@index([organizationId, status])
+  @@index([pauseResumesAt])
+  @@map("subscriptions")
+}
+
+model BillingAddon {
+  id                         String             @id @default(uuid())
+  organizationId             String
+  subscriptionId             String
+  type                       BillingAddonType
+  status                     BillingAddonStatus @default(PENDING)
+  providerPriceId            String
+  providerSubscriptionItemId String?
+  quantity                   Int                @default(0)
+  unitAmountCents            Int
+  currency                   String             @default("CAD")
+  lastSyncedAt               DateTime?
+  lastError                  String?
+  metadata                   Json               @default("{}")
+  createdAt                  DateTime           @default(now())
+  updatedAt                  DateTime           @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, type])
+  @@index([subscriptionId])
+  @@index([status])
+  @@map("billing_addons")
+}
+
+model BillingPlan {
+  id                String   @id @default(uuid())
+  plan              PlanType
+  version           Int      @default(1)
+  displayName       String
+  monthlyPriceCents Int
+  currency          String   @default("CAD")
+  providerPriceId   String?
+  limits            Json
+  features          Json
+  active            Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@unique([plan, version])
+  @@index([plan, active])
+  @@map("billing_plans")
+}
+
+model OrganizationFeatureOverride {
+  id             String    @id @default(uuid())
+  organizationId String
+  feature        String
+  enabled        Boolean?
+  limit          Int?
+  expiresAt      DateTime?
+  metadata       Json      @default("{}")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, feature])
+  @@index([organizationId])
+  @@index([expiresAt])
+  @@map("organization_feature_overrides")
+}
+
+model BillingEvent {
+  id             String          @id @default(uuid())
+  organizationId String
+  provider       BillingProvider @default(STRIPE)
+  eventId        String
+  eventType      String
+  processed      Boolean         @default(false)
+  payload        Json
+  processedAt    DateTime?
+  createdAt      DateTime        @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, eventId])
+  @@index([organizationId])
+  @@index([eventId])
+  @@index([processed])
+  @@index([eventType])
+  @@index([createdAt])
+  @@map("billing_events")
+}
+
+model Agent {
+  id             String      @id @default(uuid())
+  organizationId String
+  name           String
+  description    String?
+  language       String      @default("en-US")
+  voice          String      @default("alloy")
+  systemPrompt   String      @db.Text
+  status         AgentStatus @default(DRAFT)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  deletedAt      DateTime?
+
+  organization         Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  knowledgeBases       KnowledgeBase[]
+  ragSearchEvents      RagSearchEvent[]
+  conversations        Conversation[]
+  widgets              Widget[]
+  phoneNumbers         PhoneNumber[]
+  externalPhoneNumbers ExternalPhoneNumber[]
+  portRequests         PortRequest[]
+  calls                Call[]
+  outboundCalls        OutboundCall[]
+  campaigns            Campaign[]
+  realtimeSessions     RealtimeSession[]
+  toolExecutions       ToolExecution[]
+  appointmentRequests  AppointmentRequest[]
+  appointments         Appointment[]
+  leads                Lead[]
+
+  @@index([organizationId])
+  @@index([status])
+  @@index([deletedAt])
+  @@map("agents")
+}
+
+model PhoneNumber {
+  id              String              @id @default(uuid())
+  organizationId  String
+  agentId         String?
+  phoneNumber     String              @unique
+  friendlyName    String?
+  country         String?
+  countryCode     String?
+  areaCode        String?
+  capabilities    Json                @default("{}")
+  provider        PhoneNumberProvider @default(TWILIO)
+  purchaseSource  PurchaseSource?
+  status          PhoneNumberStatus   @default(UNASSIGNED)
+  twilioSid       String?
+  voiceWebhookUrl String?
+  smsWebhookUrl   String?
+  monthlyCost     Decimal?            @db.Decimal(20, 2)
+  providerCost    Decimal?            @db.Decimal(20, 2)
+  customerPrice   Decimal?            @db.Decimal(20, 2)
+  profitMargin    Decimal?            @db.Decimal(20, 2)
+  isPurchased     Boolean             @default(false)
+  purchasedAt     DateTime?
+  releasedAt      DateTime?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  deletedAt       DateTime?
+
+  organization              Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  agent                     Agent?                @relation(fields: [agentId], references: [id], onDelete: SetNull)
+  calls                     Call[]
+  outboundCalls             OutboundCall[]
+  forwardingExternalNumbers ExternalPhoneNumber[]
+  portRequest               PortRequest?
+
+  @@index([organizationId])
+  @@index([agentId])
+  @@index([phoneNumber])
+  @@index([status])
+  @@index([provider])
+  @@index([purchaseSource])
+  @@index([countryCode])
+  @@index([isPurchased])
+  @@index([twilioSid])
+  @@index([createdAt])
+  @@index([deletedAt])
+  @@map("phone_numbers")
+}
+
+model ExternalPhoneNumber {
+  id                            String                           @id @default(uuid())
+  organizationId                String
+  phoneNumber                   String                           @unique
+  countryCode                   String
+  status                        ExternalPhoneNumberStatus        @default(PENDING)
+  assignedAgentId               String?
+  forwardingTargetPhoneNumberId String?
+  forwardingTargetNumber        String?
+  verificationMethod            ExternalNumberVerificationMethod @default(SMS)
+  verificationCodeHash          String?
+  verificationExpiresAt         DateTime?
+  verificationAttempts          Int                              @default(0)
+  verificationSendCount         Int                              @default(0)
+  verificationWindowStartedAt   DateTime?
+  lastVerificationSentAt        DateTime?
+  verifiedAt                    DateTime?
+  activatedAt                   DateTime?
+  lastTestCallAt                DateTime?
+  forwardingConfirmedAt         DateTime?
+  testSessionHash               String?
+  testStartedAt                 DateTime?
+  testExpiresAt                 DateTime?
+  disabledAt                    DateTime?
+  createdAt                     DateTime                         @default(now())
+  updatedAt                     DateTime                         @updatedAt
+
+  organization                Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  assignedAgent               Agent?       @relation(fields: [assignedAgentId], references: [id], onDelete: SetNull)
+  forwardingTargetPhoneNumber PhoneNumber? @relation(fields: [forwardingTargetPhoneNumberId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([phoneNumber])
+  @@index([status])
+  @@index([organizationId, status])
+  @@index([forwardingTargetPhoneNumberId, testExpiresAt])
+  @@map("external_phone_numbers")
+}
+
+model PortDocument {
+  id               String           @id @default(uuid())
+  organizationId   String
+  type             PortDocumentType @default(PORT_LOA)
+  originalFileName String
+  fileType         String
+  fileSize         Int
+  storagePath      String
+  storageProvider  String
+  storageBucket    String
+  uploadedBy       String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  uploader     User?        @relation("PortDocumentUploader", fields: [uploadedBy], references: [id], onDelete: SetNull)
+  portRequest  PortRequest?
+
+  @@index([organizationId])
+  @@index([type])
+  @@index([createdAt])
+  @@map("port_documents")
+}
+
+model PortRequest {
+  id                     String            @id @default(uuid())
+  organizationId         String
+  phoneNumber            String
+  countryCode            String
+  currentCarrier         String
+  encryptedAccountNumber String
+  encryptedAccountPin    String?
+  businessName           String
+  businessAddress        Json
+  authorizedContactName  String
+  authorizedContactEmail String
+  authorizedContactPhone String
+  loaDocumentId          String?           @unique
+  status                 PortRequestStatus @default(PENDING)
+  statusMessage          String?
+  twilioPortRequestId    String?           @unique
+  estimatedPortDate      DateTime?
+  submittedAt            DateTime?
+  completedAt            DateTime?
+  rejectedAt             DateTime?
+  cancelledAt            DateTime?
+  assignedAgentId        String?
+  activatedAt            DateTime?
+  phoneNumberId          String?           @unique
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
+
+  organization  Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  loaDocument   PortDocument?        @relation(fields: [loaDocumentId], references: [id], onDelete: SetNull)
+  assignedAgent Agent?               @relation(fields: [assignedAgentId], references: [id], onDelete: SetNull)
+  phoneRecord   PhoneNumber?         @relation(fields: [phoneNumberId], references: [id], onDelete: SetNull)
+  history       PortRequestHistory[]
+
+  @@unique([organizationId, phoneNumber])
+  @@index([organizationId])
+  @@index([phoneNumber])
+  @@index([status])
+  @@index([twilioPortRequestId])
+  @@index([estimatedPortDate])
+  @@map("port_requests")
+}
+
+model PortRequestHistory {
+  id            String            @id @default(uuid())
+  portRequestId String
+  status        PortRequestStatus
+  message       String?
+  actorType     String
+  actorId       String?
+  createdAt     DateTime          @default(now())
+
+  portRequest PortRequest @relation(fields: [portRequestId], references: [id], onDelete: Cascade)
+
+  @@index([portRequestId, createdAt])
+  @@map("port_request_history")
+}
+
+model Call {
+  id               String        @id @default(uuid())
+  organizationId   String
+  agentId          String
+  phoneNumberId    String
+  conversationId   String?       @unique
+  callRecordingId  String?       @unique
+  callTranscriptId String?       @unique
+  twilioCallSid    String        @unique
+  callerNumber     String
+  calledNumber     String
+  direction        CallDirection
+  status           CallStatus    @default(RINGING)
+  startedAt        DateTime      @default(now())
+  answeredAt       DateTime?
+  endedAt          DateTime?
+  durationSeconds  Int?
+  endReason        CallEndReason @default(UNKNOWN)
+  source           CallSource    @default(VOICE)
+  metadata         Json          @default("{}")
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  organization        Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  agent               Agent                @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  phoneNumber         PhoneNumber          @relation(fields: [phoneNumberId], references: [id], onDelete: Cascade)
+  conversation        Conversation?        @relation("CallConversation", fields: [conversationId], references: [id], onDelete: SetNull)
+  callRecording       CallRecording?       @relation("CallLatestRecording", fields: [callRecordingId], references: [id], onDelete: SetNull)
+  callTranscript      CallTranscript?      @relation("CallLatestTranscript", fields: [callTranscriptId], references: [id], onDelete: SetNull)
+  sessions            CallSession[]
+  realtimeSessions    RealtimeSession[]
+  recordings          CallRecording[]
+  transcripts         CallTranscript[]
+  summary             CallSummary?
+  outboundCall        OutboundCall?
+  toolExecutions      ToolExecution[]
+  appointmentRequests AppointmentRequest[]
+  appointments        Appointment[]
+  leads               Lead[]
+
+  @@index([organizationId])
+  @@index([phoneNumberId])
+  @@index([agentId])
+  @@index([twilioCallSid])
+  @@index([status])
+  @@index([startedAt])
+  @@index([conversationId])
+  @@index([callRecordingId])
+  @@index([callTranscriptId])
+  @@index([source])
+  @@index([endReason])
+  @@index([organizationId, startedAt])
+  @@index([organizationId, startedAt, id])
+  @@index([organizationId, status, startedAt])
+  @@map("calls")
+}
+
+model OutboundCall {
+  id                    String                 @id @default(uuid())
+  organizationId        String
+  customerProfileId     String
+  leadId                String?
+  callId                String?                @unique
+  agentId               String
+  phoneNumberId         String?
+  automationExecutionId String?
+  recordingId           String?                @unique
+  transcriptId          String?                @unique
+  reasonType            OutboundCallReasonType
+  reasonDescription     String                 @db.Text
+  status                OutboundCallStatus     @default(PENDING)
+  attemptNumber         Int                    @default(1)
+  scheduledAt           DateTime
+  startedAt             DateTime?
+  endedAt               DateTime?
+  durationSeconds       Int?
+  appointmentBooked     Boolean                @default(false)
+  qualified             Boolean                @default(false)
+  summaryId             String?                @unique
+  provider              CommunicationProvider  @default(TWILIO)
+  providerCallSid       String?                @unique
+  lastError             String?                @db.Text
+  metadata              Json                   @default("{}")
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+
+  organization        Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  customerProfile     CustomerProfile      @relation(fields: [customerProfileId], references: [id], onDelete: Cascade)
+  lead                Lead?                @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  call                Call?                @relation(fields: [callId], references: [id], onDelete: SetNull)
+  agent               Agent                @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  phoneNumber         PhoneNumber?         @relation(fields: [phoneNumberId], references: [id], onDelete: SetNull)
+  automationExecution AutomationExecution? @relation(fields: [automationExecutionId], references: [id], onDelete: SetNull)
+  recording           CallRecording?       @relation(fields: [recordingId], references: [id], onDelete: SetNull)
+  transcript          CallTranscript?      @relation(fields: [transcriptId], references: [id], onDelete: SetNull)
+  summary             CallSummary?         @relation(fields: [summaryId], references: [id], onDelete: SetNull)
+  campaignTarget      CampaignTarget?
+
+  @@index([organizationId])
+  @@index([customerProfileId])
+  @@index([leadId])
+  @@index([callId])
+  @@index([agentId])
+  @@index([recordingId])
+  @@index([transcriptId])
+  @@index([status])
+  @@index([reasonType])
+  @@index([scheduledAt])
+  @@index([providerCallSid])
+  @@index([organizationId, status, scheduledAt])
+  @@map("outbound_calls")
+}
+
+model Campaign {
+  id                 String               @id @default(uuid())
+  organizationId     String
+  name               String
+  description        String?              @db.Text
+  campaignType       CampaignType
+  status             CampaignStatus       @default(DRAFT)
+  assignedAgentId    String
+  scheduleType       CampaignScheduleType @default(IMMEDIATE)
+  scheduledAt        DateTime?
+  recurrence         Json?
+  targetingFilters   Json                 @default("{}")
+  maxAttempts        Int                  @default(1)
+  targetCount        Int                  @default(0)
+  callsCreated       Int                  @default(0)
+  callsCompleted     Int                  @default(0)
+  connectedCalls     Int                  @default(0)
+  qualifiedLeads     Int                  @default(0)
+  appointmentsBooked Int                  @default(0)
+  startedAt          DateTime?
+  completedAt        DateTime?
+  cancelledAt        DateTime?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+
+  organization  Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  assignedAgent Agent            @relation(fields: [assignedAgentId], references: [id], onDelete: Restrict)
+  targets       CampaignTarget[]
+  leadImports   LeadImport[]
+
+  @@index([organizationId])
+  @@index([organizationId, status, scheduledAt])
+  @@index([assignedAgentId])
+  @@index([campaignType])
+  @@map("campaigns")
+}
+
+model CampaignTarget {
+  id                String               @id @default(uuid())
+  campaignId        String
+  customerProfileId String
+  leadId            String?
+  outboundCallId    String?              @unique
+  status            CampaignTargetStatus @default(PENDING)
+  attemptCount      Int                  @default(0)
+  lastAttemptAt     DateTime?
+  completedAt       DateTime?
+  failureReason     String?              @db.Text
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+
+  campaign        Campaign        @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  customerProfile CustomerProfile @relation(fields: [customerProfileId], references: [id], onDelete: Cascade)
+  lead            Lead?           @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  outboundCall    OutboundCall?   @relation(fields: [outboundCallId], references: [id], onDelete: SetNull)
+
+  @@unique([campaignId, customerProfileId])
+  @@index([campaignId, status])
+  @@index([customerProfileId])
+  @@index([leadId])
+  @@map("campaign_targets")
+}
+
+model CallSession {
+  id             String            @id @default(uuid())
+  callId         String
+  organizationId String
+  twilioCallSid  String
+  streamSid      String?           @unique
+  status         CallSessionStatus @default(CONNECTING)
+  connectedAt    DateTime?
+  disconnectedAt DateTime?
+  packetCount    Int               @default(0)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  organization    Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  call            Call             @relation(fields: [callId], references: [id], onDelete: Cascade)
+  realtimeSession RealtimeSession?
+  recordings      CallRecording[]
+
+  @@index([organizationId])
+  @@index([callId])
+  @@index([twilioCallSid])
+  @@index([streamSid])
+  @@index([status])
+  @@map("call_sessions")
+}
+
+model CallRecording {
+  id                   String          @id @default(uuid())
+  organizationId       String
+  callId               String
+  callSessionId        String
+  twilioCallSid        String
+  storageProvider      String?
+  storagePath          String?
+  fileName             String
+  mimeType             String          @default("audio/wav")
+  durationSeconds      Int?
+  fileSizeBytes        Int?
+  status               RecordingStatus @default(PENDING)
+  recordingStartedAt   DateTime?
+  recordingCompletedAt DateTime?
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+
+  organization Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  call         Call            @relation(fields: [callId], references: [id], onDelete: Cascade)
+  callSession  CallSession     @relation(fields: [callSessionId], references: [id], onDelete: Cascade)
+  transcript   CallTranscript?
+  outboundCall OutboundCall?
+  callLogs     Call[]          @relation("CallLatestRecording")
+
+  @@unique([callSessionId])
+  @@index([organizationId])
+  @@index([callId])
+  @@index([callSessionId])
+  @@index([twilioCallSid])
+  @@index([status])
+  @@index([createdAt])
+  @@map("call_recordings")
+}
+
+model CallTranscript {
+  id               String           @id @default(uuid())
+  organizationId   String
+  callId           String
+  callRecordingId  String           @unique
+  conversationId   String?
+  status           TranscriptStatus @default(PENDING)
+  language         String?
+  provider         String?
+  durationSeconds  Int?
+  wordCount        Int              @default(0)
+  confidence       Float?
+  fullText         String           @default("") @db.Text
+  summary          String?          @db.Text
+  failureReason    String?          @db.Text
+  processingTimeMs Int?
+  startedAt        DateTime?
+  completedAt      DateTime?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  organization  Organization            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  call          Call                    @relation(fields: [callId], references: [id], onDelete: Cascade)
+  callRecording CallRecording           @relation(fields: [callRecordingId], references: [id], onDelete: Cascade)
+  conversation  Conversation?           @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  outboundCall  OutboundCall?
+  segments      CallTranscriptSegment[]
+  callLogs      Call[]                  @relation("CallLatestTranscript")
+  summaries     CallSummary[]
+
+  @@index([organizationId])
+  @@index([callId])
+  @@index([conversationId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([organizationId, status, createdAt])
+  @@map("call_transcripts")
+}
+
+model CallSummary {
+  id                  String    @id @default(uuid())
+  organizationId      String
+  customerProfileId   String
+  callId              String    @unique
+  conversationId      String?
+  transcriptId        String?
+  summary             String    @db.Text
+  intent              String
+  sentiment           Sentiment
+  outcome             Outcome
+  nextAction          String?   @db.Text
+  followUpRequired    Boolean   @default(false)
+  confidenceScore     Float
+  summaryVersion      String
+  model               String
+  inputTokens         Int       @default(0)
+  outputTokens        Int       @default(0)
+  totalTokens         Int       @default(0)
+  estimatedCostMicros Int       @default(0)
+  generatedAt         DateTime
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  organization    Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  customerProfile CustomerProfile @relation(fields: [customerProfileId], references: [id], onDelete: Cascade)
+  call            Call            @relation(fields: [callId], references: [id], onDelete: Cascade)
+  conversation    Conversation?   @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  transcript      CallTranscript? @relation(fields: [transcriptId], references: [id], onDelete: SetNull)
+  outboundCall    OutboundCall?
+
+  @@index([organizationId])
+  @@index([customerProfileId])
+  @@index([callId])
+  @@index([generatedAt])
+  @@index([intent])
+  @@index([sentiment])
+  @@map("call_summaries")
+}
+
+model CallTranscriptSegment {
+  id           String      @id @default(uuid())
+  transcriptId String
+  speaker      SpeakerType @default(UNKNOWN)
+  startMs      Int
+  endMs        Int
+  text         String      @db.Text
+  confidence   Float?
+  sequence     Int
+  createdAt    DateTime    @default(now())
+
+  transcript CallTranscript @relation(fields: [transcriptId], references: [id], onDelete: Cascade)
+
+  @@unique([transcriptId, sequence])
+  @@index([transcriptId])
+  @@index([speaker])
+  @@index([sequence])
+  @@map("call_transcript_segments")
+}
+
+model RealtimeSession {
+  id                   String                @id @default(uuid())
+  organizationId       String
+  callId               String
+  callSessionId        String                @unique
+  agentId              String
+  conversationId       String?               @unique
+  openAiSessionId      String?
+  status               RealtimeSessionStatus @default(CONNECTING)
+  audioPacketsSent     Int                   @default(0)
+  audioPacketsReceived Int                   @default(0)
+  lastLatencyMs        Int?
+  connectedAt          DateTime?
+  disconnectedAt       DateTime?
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+
+  organization Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  call         Call          @relation(fields: [callId], references: [id], onDelete: Cascade)
+  callSession  CallSession   @relation(fields: [callSessionId], references: [id], onDelete: Cascade)
+  agent        Agent         @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  conversation Conversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([callId])
+  @@index([agentId])
+  @@index([openAiSessionId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("realtime_sessions")
+}
+
+model TwilioConnection {
+  id             String                 @id @default(uuid())
+  organizationId String
+  accountSid     String
+  friendlyName   String?
+  status         TwilioConnectionStatus @default(CONNECTED)
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  deletedAt      DateTime?
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, accountSid])
+  @@index([organizationId])
+  @@index([status])
+  @@index([deletedAt])
+  @@map("twilio_connections")
+}
+
+model Widget {
+  id             String         @id @default(uuid())
+  organizationId String
+  agentId        String
+  name           String
+  status         WidgetStatus   @default(ACTIVE)
+  publicKey      String         @unique
+  primaryColor   String         @default("#0f766e")
+  position       WidgetPosition @default(BOTTOM_RIGHT)
+  welcomeMessage String         @default("Hi, how can I help?")
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  deletedAt      DateTime?
+
+  organization Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  agent        Agent           @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  visitors     WidgetVisitor[]
+
+  @@index([organizationId])
+  @@index([agentId])
+  @@index([status])
+  @@index([deletedAt])
+  @@map("widgets")
+}
+
+model WidgetVisitor {
+  id             String   @id @default(uuid())
+  organizationId String
+  widgetId       String
+  visitorId      String
+  ipHash         String?
+  userAgent      String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  widget       Widget       @relation(fields: [widgetId], references: [id], onDelete: Cascade)
+
+  @@unique([widgetId, visitorId])
+  @@index([organizationId])
+  @@index([widgetId])
+  @@index([visitorId])
+  @@index([createdAt])
+  @@map("widget_visitors")
+}
+
+model KnowledgeBase {
+  id             String              @id @default(uuid())
+  organizationId String
+  agentId        String?
+  name           String
+  description    String?
+  status         KnowledgeBaseStatus @default(DRAFT)
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  deletedAt      DateTime?
+
+  organization    Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  agent           Agent?           @relation(fields: [agentId], references: [id], onDelete: SetNull)
+  documents       Document[]
+  websiteSources  WebsiteSource[]
+  knowledgeChunks KnowledgeChunk[]
+  faqEntries      FaqEntry[]
+  ragSearchEvents RagSearchEvent[]
+
+  @@index([organizationId])
+  @@index([agentId])
+  @@index([status])
+  @@index([deletedAt])
+  @@map("knowledge_bases")
+}
+
+model WebsiteSource {
+  id              String              @id @default(uuid())
+  organizationId  String
+  knowledgeBaseId String
+  url             String
+  title           String?
+  description     String?
+  status          WebsiteSourceStatus @default(PENDING)
+  contentLength   Int                 @default(0)
+  lastScrapedAt   DateTime?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  deletedAt       DateTime?
+
+  organization  Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  knowledgeBase KnowledgeBase    @relation(fields: [knowledgeBaseId], references: [id], onDelete: Cascade)
+  content       WebsiteContent?
+  chunks        KnowledgeChunk[]
+
+  @@index([organizationId])
+  @@index([knowledgeBaseId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([lastScrapedAt])
+  @@index([deletedAt])
+  @@map("website_sources")
+}
+
+model WebsiteContent {
+  id              String   @id @default(uuid())
+  websiteSourceId String   @unique
+  organizationId  String
+  content         String   @db.Text
+  htmlContent     String   @db.Text
+  wordCount       Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  websiteSource WebsiteSource @relation(fields: [websiteSourceId], references: [id], onDelete: Cascade)
+  organization  Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([wordCount])
+  @@map("website_content")
+}
+
+model Document {
+  id               String           @id @default(uuid())
+  organizationId   String
+  knowledgeBaseId  String
+  name             String
+  description      String?
+  fileName         String?
+  originalFileName String?
+  fileType         String?
+  fileExtension    String?
+  fileSize         Int?
+  storagePath      String?
+  storageProvider  String?
+  storageBucket    String?
+  uploadStatus     UploadStatus     @default(PENDING)
+  processingStatus ProcessingStatus @default(PENDING)
+  uploadedBy       String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  deletedAt        DateTime?
+
+  organization  Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  knowledgeBase KnowledgeBase    @relation(fields: [knowledgeBaseId], references: [id], onDelete: Cascade)
+  uploader      User?            @relation("DocumentUploader", fields: [uploadedBy], references: [id], onDelete: SetNull)
+  chunks        KnowledgeChunk[]
+
+  @@index([organizationId])
+  @@index([knowledgeBaseId])
+  @@index([createdAt])
+  @@index([uploadedBy])
+  @@index([uploadStatus])
+  @@index([processingStatus])
+  @@index([deletedAt])
+  @@map("documents")
+}
+
+model KnowledgeChunk {
+  id              String   @id @default(uuid())
+  organizationId  String
+  knowledgeBaseId String
+  documentId      String?
+  websiteSourceId String?
+  faqEntryId      String?
+  chunkIndex      Int
+  chunkText       String   @db.Text
+  tokenCount      Int
+  metadata        Json?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  organization  Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  knowledgeBase KnowledgeBase       @relation(fields: [knowledgeBaseId], references: [id], onDelete: Cascade)
+  document      Document?           @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  websiteSource WebsiteSource?      @relation(fields: [websiteSourceId], references: [id], onDelete: Cascade)
+  faqEntry      FaqEntry?           @relation(fields: [faqEntryId], references: [id], onDelete: Cascade)
+  embedding     KnowledgeEmbedding?
+
+  @@unique([documentId, chunkIndex])
+  @@unique([websiteSourceId, chunkIndex])
+  @@unique([faqEntryId, chunkIndex])
+  @@index([organizationId])
+  @@index([knowledgeBaseId])
+  @@index([documentId])
+  @@index([websiteSourceId])
+  @@index([faqEntryId])
+  @@index([chunkIndex])
+  @@index([createdAt])
+  @@map("knowledge_chunks")
+}
+
+model KnowledgeEmbedding {
+  id              String                       @id @default(uuid())
+  organizationId  String
+  chunkId         String                       @unique
+  embeddingModel  String
+  embeddingVector Float[]
+  embeddingNative Unsupported("vector(1536)")? @map("embedding")
+  dimensions      Int
+  createdAt       DateTime                     @default(now())
+
+  organization Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  chunk        KnowledgeChunk @relation(fields: [chunkId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([organizationId, embeddingModel])
+  @@index([embeddingModel])
+  @@index([dimensions])
+  @@index([createdAt])
+  @@map("knowledge_embeddings")
+}
+
+model Conversation {
+  id             String              @id @default(uuid())
+  organizationId String
+  agentId        String
+  visitorId      String?
+  sessionId      String?
+  channel        ConversationChannel
+  status         ConversationStatus  @default(ACTIVE)
+  source         ConversationSource  @default(INTERNAL)
+  startedAt      DateTime            @default(now())
+  lastMessageAt  DateTime?
+  endedAt        DateTime?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  deletedAt      DateTime?
+
+  organization        Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  agent               Agent                @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  messages            Message[]
+  memories            ConversationMemory[]
+  memoryFacts         MemoryFact[]
+  realtimeSession     RealtimeSession?
+  callTranscripts     CallTranscript[]
+  callSummaries       CallSummary[]
+  callLogs            Call[]               @relation("CallConversation")
+  toolExecutions      ToolExecution[]
+  appointmentRequests AppointmentRequest[]
+  appointments        Appointment[]
+  leads               Lead[]
+  emailQueue          EmailQueue[]
+  smsQueue            SmsQueue[]
+
+  @@index([organizationId])
+  @@index([agentId])
+  @@index([visitorId])
+  @@index([sessionId])
+  @@index([channel])
+  @@index([status])
+  @@index([source])
+  @@index([startedAt])
+  @@index([lastMessageAt])
+  @@index([deletedAt])
+  @@map("conversations")
+}
+
+model ConversationMemory {
+  id             String   @id @default(uuid())
+  organizationId String
+  conversationId String
+  summary        String   @db.Text
+  messageCount   Int
+  tokenEstimate  Int
+  generatedAt    DateTime @default(now())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([conversationId])
+  @@index([messageCount])
+  @@index([generatedAt])
+  @@map("conversation_memories")
+}
+
+model MemoryFact {
+  id             String         @id @default(uuid())
+  organizationId String
+  conversationId String
+  factType       MemoryFactType @default(CUSTOM)
+  factKey        String
+  factValue      String         @db.Text
+  confidence     Float          @default(0.7)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([conversationId])
+  @@index([factType])
+  @@index([factKey])
+  @@index([createdAt])
+  @@map("memory_facts")
+}
+
+model Message {
+  id             String      @id @default(uuid())
+  organizationId String
+  conversationId String
+  senderType     SenderType
+  content        String      @db.Text
+  messageType    MessageType @default(TEXT)
+  tokenCount     Int         @default(0)
+  metadata       Json        @default("{}")
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  deletedAt      DateTime?
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([conversationId])
+  @@index([senderType])
+  @@index([messageType])
+  @@index([createdAt])
+  @@index([deletedAt])
+  @@map("messages")
+}
+
+model Tool {
+  id             String   @id @default(uuid())
+  organizationId String
+  name           String
+  displayName    String
+  description    String   @db.Text
+  enabled        Boolean  @default(true)
+  schema         Json
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, name])
+  @@index([organizationId])
+  @@index([name])
+  @@index([enabled])
+  @@map("tools")
+}
+
+model ToolExecution {
+  id             String              @id @default(uuid())
+  organizationId String
+  callId         String?
+  conversationId String?
+  agentId        String?
+  toolName       String
+  status         ToolExecutionStatus @default(PENDING)
+  input          Json
+  output         Json?
+  error          String?             @db.Text
+  startedAt      DateTime?
+  completedAt    DateTime?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+
+  organization Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  call         Call?         @relation(fields: [callId], references: [id], onDelete: SetNull)
+  conversation Conversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  agent        Agent?        @relation(fields: [agentId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([conversationId])
+  @@index([callId])
+  @@index([agentId])
+  @@index([toolName])
+  @@index([status])
+  @@index([createdAt])
+  @@map("tool_executions")
+}
+
+model AppointmentRequest {
+  id             String    @id @default(uuid())
+  organizationId String
+  conversationId String?
+  callId         String?
+  agentId        String?
+  name           String
+  phone          String
+  email          String?
+  preferredDate  DateTime?
+  notes          String?   @db.Text
+  status         String    @default("REQUESTED")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  organization Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  conversation Conversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  call         Call?         @relation(fields: [callId], references: [id], onDelete: SetNull)
+  agent        Agent?        @relation(fields: [agentId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([conversationId])
+  @@index([callId])
+  @@index([agentId])
+  @@index([phone])
+  @@index([email])
+  @@index([createdAt])
+  @@map("appointment_requests")
+}
+
+model Appointment {
+  id                 String            @id @default(uuid())
+  organizationId     String
+  agentId            String
+  contactId          String?
+  conversationId     String?
+  callId             String?
+  title              String
+  description        String?           @db.Text
+  status             AppointmentStatus @default(CONFIRMED)
+  timezone           String
+  startTime          DateTime
+  endTime            DateTime
+  source             AppointmentSource @default(MANUAL)
+  confirmationNumber String            @unique
+  idempotencyKey     String?
+  notes              String?           @db.Text
+  metadata           Json              @default("{}")
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+
+  organization Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  agent        Agent         @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  contact      Contact?      @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  conversation Conversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  call         Call?         @relation(fields: [callId], references: [id], onDelete: SetNull)
+
+  @@unique([organizationId, idempotencyKey])
+  @@index([organizationId])
+  @@index([agentId])
+  @@index([contactId])
+  @@index([conversationId])
+  @@index([callId])
+  @@index([startTime])
+  @@index([status])
+  @@index([organizationId, agentId, startTime])
+  @@index([organizationId, status, startTime])
+  @@map("appointments")
+}
+
+model Availability {
+  id                  String   @id @default(uuid())
+  organizationId      String
+  dayOfWeek           Int
+  startTime           String
+  endTime             String
+  isEnabled           Boolean  @default(true)
+  timezone            String
+  bufferBeforeMinutes Int      @default(0)
+  bufferAfterMinutes  Int      @default(0)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([organizationId, dayOfWeek, isEnabled])
+  @@index([timezone])
+  @@map("availability")
+}
+
+model Contact {
+  id                String    @id @default(uuid())
+  organizationId    String
+  name              String
+  firstName         String?
+  lastName          String?
+  phone             String?
+  email             String?
+  company           String?
+  timezone          String?
+  preferredLanguage String?
+  tags              String[]  @default([])
+  notes             String?   @db.Text
+  metadata          Json      @default("{}")
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  deletedAt         DateTime?
+
+  organization         Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  leads                Lead[]
+  appointments         Appointment[]
+  communicationThreads CommunicationThread[]
+  customerProfile      CustomerProfile?
+
+  @@unique([organizationId, phone])
+  @@unique([organizationId, email])
+  @@index([organizationId])
+  @@index([organizationId, updatedAt])
+  @@index([phone])
+  @@index([email])
+  @@index([deletedAt])
+  @@map("contacts")
+}
+
+model CustomerProfile {
+  id                  String             @id @default(uuid())
+  organizationId      String
+  contactId           String             @unique
+  name                String
+  phone               String?
+  email               String?
+  company             String?
+  address             Json?
+  totalCalls          Int                @default(0)
+  totalAppointments   Int                @default(0)
+  totalConversations  Int                @default(0)
+  totalMessages       Int                @default(0)
+  totalAiInteractions Int                @default(0)
+  leadStatus          CustomerLeadStatus @default(NEW)
+  lastContactAt       DateTime?
+  firstSeenAt         DateTime           @default(now())
+  lastSeenAt          DateTime           @default(now())
+  notes               String?            @db.Text
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+
+  organization         Organization            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  contact              Contact                 @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  timelineEvents       CustomerTimelineEvent[]
+  callSummaries        CallSummary[]
+  automationExecutions AutomationExecution[]
+  outboundCalls        OutboundCall[]
+  campaignTargets      CampaignTarget[]
+
+  @@unique([organizationId, phone])
+  @@unique([organizationId, email])
+  @@index([organizationId])
+  @@index([organizationId, lastContactAt])
+  @@index([phone])
+  @@index([email])
+  @@index([leadStatus])
+  @@map("customer_profiles")
+}
+
+model AutomationWorkflow {
+  id                    String                @id @default(uuid())
+  organizationId        String
+  name                  String
+  description           String?               @db.Text
+  triggerType           AutomationTriggerType
+  enabled               Boolean               @default(true)
+  isDefault             Boolean               @default(false)
+  assignedAgentId       String?
+  sourceTemplateId      String?
+  sourceTemplateVersion Int?
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+
+  organization Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  rules        AutomationRule[]
+  executions   AutomationExecution[]
+
+  @@unique([organizationId, triggerType, name])
+  @@unique([organizationId, sourceTemplateId])
+  @@index([organizationId])
+  @@index([organizationId, triggerType, enabled])
+  @@map("automation_workflows")
+}
+
+model WorkflowTemplate {
+  id                        String                   @id @default(uuid())
+  organizationId            String?
+  name                      String
+  description               String?                  @db.Text
+  category                  WorkflowTemplateCategory
+  systemTemplate            Boolean                  @default(false)
+  triggerType               AutomationTriggerType
+  defaultConfiguration      Json
+  estimatedConversionImpact Int                      @default(3)
+  enabled                   Boolean                  @default(true)
+  createdAt                 DateTime                 @default(now())
+  updatedAt                 DateTime                 @updatedAt
+
+  organization Organization?             @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  versions     WorkflowTemplateVersion[]
+
+  @@unique([organizationId, name])
+  @@index([organizationId, enabled])
+  @@index([systemTemplate, category, enabled])
+  @@map("workflow_templates")
+}
+
+model WorkflowTemplateVersion {
+  id            String   @id @default(uuid())
+  templateId    String
+  version       Int
+  configuration Json
+  createdAt     DateTime @default(now())
+
+  template WorkflowTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@unique([templateId, version])
+  @@index([templateId, createdAt])
+  @@map("workflow_template_versions")
+}
+
+model AutomationTemplate {
+  id             String               @id @default(uuid())
+  organizationId String
+  name           String
+  actionType     AutomationActionType
+  subject        String?
+  body           String               @db.Text
+  enabled        Boolean              @default(true)
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+
+  organization Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  rules        AutomationRule[]
+
+  @@unique([organizationId, name, actionType])
+  @@index([organizationId, actionType, enabled])
+  @@map("automation_templates")
+}
+
+model AutomationRule {
+  id           String               @id @default(uuid())
+  workflowId   String
+  delayMinutes Int                  @default(0)
+  actionType   AutomationActionType
+  templateId   String?
+  conditions   Json                 @default("{}")
+  enabled      Boolean              @default(true)
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+
+  workflow   AutomationWorkflow    @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  template   AutomationTemplate?   @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  executions AutomationExecution[]
+
+  @@index([workflowId, enabled])
+  @@index([templateId])
+  @@map("automation_rules")
+}
+
+model AutomationExecution {
+  id                String                    @id @default(uuid())
+  organizationId    String
+  workflowId        String
+  ruleId            String
+  customerProfileId String
+  triggerType       AutomationTriggerType
+  actionType        AutomationActionType
+  status            AutomationExecutionStatus @default(PENDING)
+  reasonType        OutboundCallReason        @default(MANUAL_CALL)
+  reasonDescription String                    @db.Text
+  followUpReason    String                    @db.Text
+  triggerId         String
+  idempotencyKey    String
+  scheduledFor      DateTime
+  startedAt         DateTime?
+  completedAt       DateTime?
+  failedAt          DateTime?
+  cancelledAt       DateTime?
+  failureReason     String?                   @db.Text
+  attemptCount      Int                       @default(0)
+  metadata          Json                      @default("{}")
+  createdAt         DateTime                  @default(now())
+  updatedAt         DateTime                  @updatedAt
+
+  organization    Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  workflow        AutomationWorkflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  rule            AutomationRule     @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+  customerProfile CustomerProfile    @relation(fields: [customerProfileId], references: [id], onDelete: Cascade)
+  outboundCalls   OutboundCall[]
+
+  @@unique([organizationId, idempotencyKey])
+  @@unique([organizationId, triggerId, workflowId, customerProfileId])
+  @@index([organizationId])
+  @@index([workflowId])
+  @@index([ruleId])
+  @@index([customerProfileId, scheduledFor])
+  @@index([organizationId, status, scheduledFor])
+  @@map("automation_executions")
+}
+
+model CustomerTimelineEvent {
+  id                String                    @id @default(uuid())
+  organizationId    String
+  customerProfileId String
+  eventType         CustomerTimelineEventType
+  eventCategory     CustomerTimelineCategory
+  title             String
+  description       String?                   @db.Text
+  sourceEntityType  String?
+  sourceEntityId    String?
+  idempotencyKey    String
+  metadata          Json                      @default("{}")
+  occurredAt        DateTime                  @default(now())
+  createdAt         DateTime                  @default(now())
+
+  organization    Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  customerProfile CustomerProfile @relation(fields: [customerProfileId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, idempotencyKey])
+  @@index([organizationId])
+  @@index([customerProfileId])
+  @@index([eventType])
+  @@index([occurredAt])
+  @@index([organizationId, customerProfileId, occurredAt, id])
+  @@map("customer_timeline_events")
+}
+
+model CommunicationThread {
+  id             String                  @id @default(uuid())
+  organizationId String
+  contactId      String
+  channel        CommunicationChannel
+  lastMessageAt  DateTime?
+  lastDirection  CommunicationDirection?
+  unreadCount    Int                     @default(0)
+  createdAt      DateTime                @default(now())
+  updatedAt      DateTime                @updatedAt
+
+  organization Organization           @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  contact      Contact                @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  messages     CommunicationMessage[]
+
+  @@unique([organizationId, contactId, channel])
+  @@index([organizationId])
+  @@index([contactId])
+  @@index([organizationId, channel, lastMessageAt])
+  @@index([organizationId, unreadCount])
+  @@map("communication_threads")
+}
+
+model CommunicationMessage {
+  id                String                 @id @default(uuid())
+  organizationId    String
+  threadId          String
+  provider          CommunicationProvider
+  providerMessageId String?
+  direction         CommunicationDirection
+  status            CommunicationStatus    @default(QUEUED)
+  body              String                 @db.Text
+  phone             String
+  metadata          Json                   @default("{}")
+  queuedAt          DateTime               @default(now())
+  sentAt            DateTime?
+  deliveredAt       DateTime?
+  failedAt          DateTime?
+  readAt            DateTime?
+  createdAt         DateTime               @default(now())
+  updatedAt         DateTime               @updatedAt
+
+  organization Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  thread       CommunicationThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([threadId])
+  @@index([providerMessageId])
+  @@index([status])
+  @@index([queuedAt])
+  @@index([organizationId, status, queuedAt])
+  @@map("communication_messages")
+}
+
+model Lead {
+  id                String     @id @default(uuid())
+  organizationId    String
+  contactId         String
+  conversationId    String?
+  callId            String?
+  agentId           String?
+  source            LeadSource @default(AI_AGENT)
+  status            LeadStatus @default(NEW)
+  score             Int        @default(0)
+  lastInteractionAt DateTime?
+  notes             String?    @db.Text
+  metadata          Json       @default("{}")
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  deletedAt         DateTime?
+  deletedBy         String?
+
+  organization    Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  contact         Contact             @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  conversation    Conversation?       @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  call            Call?               @relation(fields: [callId], references: [id], onDelete: SetNull)
+  agent           Agent?              @relation(fields: [agentId], references: [id], onDelete: SetNull)
+  timelineEvents  LeadTimelineEvent[]
+  outboundCalls   OutboundCall[]
+  campaignTargets CampaignTarget[]
+
+  @@unique([organizationId, contactId])
+  @@unique([organizationId, contactId, source])
+  @@index([organizationId])
+  @@index([contactId])
+  @@index([organizationId, contactId])
+  @@index([conversationId])
+  @@index([callId])
+  @@index([agentId])
+  @@index([status])
+  @@index([source])
+  @@index([organizationId, status, lastInteractionAt])
+  @@index([organizationId, source, lastInteractionAt])
+  @@index([createdAt])
+  @@index([deletedAt])
+  @@map("leads")
+}
+
+model LeadImport {
+  id             String           @id @default(uuid())
+  organizationId String
+  createdBy      String?
+  fileName       String
+  fileSizeBytes  Int              @default(0)
+  status         LeadImportStatus @default(PENDING)
+  mapping        Json             @default("{}")
+  previewRows    Json             @default("[]")
+  failedRows     Json             @default("[]")
+  duplicateRows  Json             @default("[]")
+  importOptions  Json             @default("{}")
+  rowsFound      Int              @default(0)
+  rowsValid      Int              @default(0)
+  rowsInvalid    Int              @default(0)
+  rowsDuplicate  Int              @default(0)
+  rowsProcessed  Int              @default(0)
+  rowsImported   Int              @default(0)
+  rowsFailed     Int              @default(0)
+  duplicates     Int              @default(0)
+  campaignId     String?
+  failureReason  String?          @db.Text
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  completedAt    DateTime?
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  campaign     Campaign?    @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([organizationId, status, createdAt])
+  @@index([campaignId])
+  @@map("lead_imports")
+}
+
+model LeadTimelineEvent {
+  id             String            @id @default(uuid())
+  organizationId String
+  leadId         String
+  type           TimelineEventType
+  title          String
+  description    String?           @db.Text
+  referenceType  String?
+  referenceId    String?
+  metadata       Json              @default("{}")
+  createdAt      DateTime          @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  lead         Lead         @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([leadId])
+  @@index([organizationId, leadId, createdAt])
+  @@index([organizationId, type, createdAt])
+  @@index([referenceType, referenceId])
+  @@map("lead_timeline_events")
+}
+
+model SupportTicket {
+  id              String                @id @default(uuid())
+  organizationId  String
+  userId          String?
+  subject         String
+  status          SupportTicketStatus   @default(OPEN)
+  priority        SupportTicketPriority @default(NORMAL)
+  assignedAdminId String?
+  metadata        Json                  @default("{}")
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  organization  Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user          User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  assignedAdmin AdminUser?   @relation(fields: [assignedAdminId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([userId])
+  @@index([assignedAdminId])
+  @@index([status])
+  @@index([priority])
+  @@index([createdAt])
+  @@map("support_tickets")
+}
+
+model EmailQueue {
+  id             String      @id @default(uuid())
+  organizationId String
+  conversationId String?
+  to             String
+  subject        String
+  body           String      @db.Text
+  status         QueueStatus @default(PENDING)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  organization Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  conversation Conversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([conversationId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("email_queue")
+}
+
+model SmsQueue {
+  id             String      @id @default(uuid())
+  organizationId String
+  conversationId String?
+  phone          String
+  message        String      @db.Text
+  status         QueueStatus @default(PENDING)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  organization Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  conversation Conversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([conversationId])
+  @@index([phone])
+  @@index([status])
+  @@index([createdAt])
+  @@map("sms_queue")
+}
+
+model FaqEntry {
+  id              String    @id @default(uuid())
+  organizationId  String
+  knowledgeBaseId String
+  question        String
+  answer          String    @db.Text
+  status          FaqStatus @default(ACTIVE)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+
+  organization  Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  knowledgeBase KnowledgeBase    @relation(fields: [knowledgeBaseId], references: [id], onDelete: Cascade)
+  chunks        KnowledgeChunk[]
+
+  @@index([organizationId])
+  @@index([knowledgeBaseId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([deletedAt])
+  @@map("faq_entries")
+}
+
+model RagSearchEvent {
+  id                 String   @id @default(uuid())
+  organizationId     String
+  knowledgeBaseId    String?
+  agentId            String?
+  query              String
+  source             String
+  resultCount        Int
+  averageScore       Float
+  responseTimeMs     Int
+  failed             Boolean  @default(false)
+  usedDocumentChunks Int      @default(0)
+  usedWebsiteChunks  Int      @default(0)
+  usedFaqChunks      Int      @default(0)
+  createdAt          DateTime @default(now())
+
+  organization  Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  knowledgeBase KnowledgeBase? @relation(fields: [knowledgeBaseId], references: [id], onDelete: SetNull)
+  agent         Agent?         @relation(fields: [agentId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([knowledgeBaseId])
+  @@index([agentId])
+  @@index([source])
+  @@index([failed])
+  @@index([createdAt])
+  @@map("rag_search_events")
+}

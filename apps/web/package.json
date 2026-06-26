@@ -1,0 +1,39 @@
+{
+  "name": "@ai-agent-platform/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --hostname 0.0.0.0 --port 3000",
+    "build": "next build",
+    "start": "next start --hostname 0.0.0.0 --port 3000",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"No tests configured for web app\""
+  },
+  "dependencies": {
+    "@ai-agent-platform/sdk": "workspace:*",
+    "@ai-agent-platform/shared": "workspace:*",
+    "@ai-agent-platform/types": "workspace:*",
+    "@ai-agent-platform/ui": "workspace:*",
+    "@hookform/resolvers": "^5.1.1",
+    "@tanstack/react-query": "^5.80.7",
+    "lucide-react": "^0.468.0",
+    "next": "15.5.19",
+    "next-themes": "^0.4.6",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-hook-form": "^7.58.1",
+    "zod": "^3.25.67",
+    "zustand": "^5.0.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.10",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "eslint-config-next": "15.5.19",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.10",
+    "typescript": "^5.8.3"
+  }
+}
